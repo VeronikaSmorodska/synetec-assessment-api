@@ -2,13 +2,14 @@
 using SynetecAssessmentApi.Domain;
 using SynetecAssessmentApi.Dtos;
 using SynetecAssessmentApi.Persistence;
+using SynetecAssessmentApi.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SynetecAssessmentApi.Services
 {
-    public class BonusPoolService
+    public class BonusPoolService : IBonusPoolService
     {
         private readonly AppDbContext _dbContext;
 
