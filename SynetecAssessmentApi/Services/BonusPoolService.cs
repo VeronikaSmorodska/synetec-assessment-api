@@ -55,7 +55,7 @@ namespace SynetecAssessmentApi.Services
                 throw new CustomAppError(errorString, System.Net.HttpStatusCode.BadRequest);
             }
             //get the total salary budget for the company
-            int totalSalary = _employeeRepository.GetEmployeesSallarySum();
+            int totalSalary = (int)await _employeeRepository.GetEmployeesSallarySumAsync();
 
             //calculate the bonus allocation for the employee
             decimal bonusPercentage = (decimal)employee.Salary / (decimal)totalSalary;

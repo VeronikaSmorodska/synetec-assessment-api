@@ -7,7 +7,7 @@ namespace SynetecAssessmentApi.Persistence.Repositories.Interfaces
     public interface IEmployeeRepository
     {
         Task<Employee> GetByIdWithDepartment(int selectedEmployeeId);
-        int GetEmployeesSallarySum();
+        Task<decimal> GetEmployeesSallarySumAsync();
         Task<List<Employee>> GetAllWithDepartment();
     }
 }

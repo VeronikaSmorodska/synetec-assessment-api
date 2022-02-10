@@ -2,7 +2,6 @@
 using SynetecAssessmentApi.Domain;
 using SynetecAssessmentApi.Persistence.Repositories.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SynetecAssessmentApi.Persistence.Repositories
@@ -22,9 +21,9 @@ namespace SynetecAssessmentApi.Persistence.Repositories
                                        .FirstOrDefaultAsync(item => item.Id == selectedEmployeeId);
         }
 
-        public int GetEmployeesSallarySum()
+        public async Task<decimal> GetEmployeesSallarySumAsync()
         {
-            return _dbContext.Employees.Sum(item => item.Salary);
+            return await _dbContext.Employees.SumAsync(item => item.Salary);
         }
 
         public async Task<List<Employee>> GetAllWithDepartment()
