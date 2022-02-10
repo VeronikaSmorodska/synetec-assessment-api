@@ -51,7 +51,7 @@ namespace SynetecAssessmentApi.Services
 
             if (employee == null)
             {
-                var errorString = string.Format(Exceptions.EMPLOYEE_NOT_FOUND, selectedEmployeeId);
+                var errorString = string.Format(ExceptionConstants.EMPLOYEE_NOT_FOUND, selectedEmployeeId);
                 throw new CustomAppError(errorString, System.Net.HttpStatusCode.BadRequest);
             }
             //get the total salary budget for the company

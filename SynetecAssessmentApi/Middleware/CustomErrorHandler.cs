@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using SynetecAssessmentApi.Domain.Constants;
 using SynetecAssessmentApi.Domain.Errors;
 using System;
 using System.Net;
@@ -33,7 +34,7 @@ namespace SynetecAssessmentApi.Persistence.Middleware
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            await context.Response.WriteAsync(new CustomAppError("Internal Server Error from the custom middleware.", context.Response.StatusCode).ToString());
+            await context.Response.WriteAsync(new CustomAppError(ExceptionConstants.CUSTOM_ERROR, context.Response.StatusCode).ToString());
         }
     }
 }
