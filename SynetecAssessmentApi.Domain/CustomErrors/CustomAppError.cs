@@ -6,7 +6,7 @@ namespace SynetecAssessmentApi.Domain.Errors
     public class CustomAppError : Exception
     {
         public int StatusCode { get; set; }
-        public string Message { get; set; }
+        public override string Message { get; }
         public CustomAppError(string message, HttpStatusCode statusCode)
         {
             Message = message;
