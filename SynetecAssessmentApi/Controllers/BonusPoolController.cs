@@ -16,15 +16,19 @@ namespace SynetecAssessmentApi.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _bonusPoolService.GetEmployeesAsync());
+            var response = await _bonusPoolService.GetEmployeesAsync();
+            return Ok(response);
         }
 
         [HttpPost("CalculateBonus")]
         public async Task<IActionResult> CalculateBonus([FromBody] CalculateBonusDto request)
         {
-            return Ok(await _bonusPoolService.CalculateAsync(
-                request.TotalBonusPoolAmount,
-                request.SelectedEmployeeId));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var response = await _bonusPoolService.CalculateAsync(request.TotalBonusPoolAmount, request.SelectedEmployeeId);
+            return Ok(response);
         }
     }
 }
