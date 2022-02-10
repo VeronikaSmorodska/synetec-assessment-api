@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SynetecAssessmentApi.Persistence;
 using SynetecAssessmentApi.Persistence.Middleware;
+using SynetecAssessmentApi.Persistence.Repositories;
+using SynetecAssessmentApi.Persistence.Repositories.Interfaces;
 using SynetecAssessmentApi.Services;
 using SynetecAssessmentApi.Services.Interfaces;
 
@@ -34,6 +36,7 @@ namespace SynetecAssessmentApi
                 options.UseInMemoryDatabase(databaseName: "HrDb"));
 
             services.AddScoped<IBonusPoolService, BonusPoolService>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
