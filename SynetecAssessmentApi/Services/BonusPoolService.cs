@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SynetecAssessmentApi.Domain;
+using SynetecAssessmentApi.Domain.Constants;
+using SynetecAssessmentApi.Domain.Errors;
 using SynetecAssessmentApi.Dtos;
 using SynetecAssessmentApi.Persistence;
 using SynetecAssessmentApi.Services.Interfaces;
@@ -56,6 +58,11 @@ namespace SynetecAssessmentApi.Services
                 .Include(e => e.Department)
                 .FirstOrDefaultAsync(item => item.Id == selectedEmployeeId);
 
+            if (employee == null)
+            {
+                var errorString = string.Format(Exceptions.EMPLOYEE_NOT_FOUND, selectedEmployeeId);
+                throw new CustomAppError(errorString, System.Net.HttpStatusCode.BadRequest);
+            }
             //get the total salary budget for the company
             int totalSalary = (int)_dbContext.Employees.Sum(item => item.Salary);
 

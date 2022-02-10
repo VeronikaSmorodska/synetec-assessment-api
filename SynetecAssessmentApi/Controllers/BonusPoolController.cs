@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SynetecAssessmentApi.Dtos;
 using SynetecAssessmentApi.Services.Interfaces;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SynetecAssessmentApi.Controllers
@@ -25,7 +26,10 @@ namespace SynetecAssessmentApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                string errorsString = string.Join("; ", ModelState.Values
+                                            .SelectMany(x => x.Errors)
+                                            .Select(x => x.ErrorMessage));
+                return BadRequest(errorsString);
             }
             var response = await _bonusPoolService.CalculateAsync(request.TotalBonusPoolAmount, request.SelectedEmployeeId);
             return Ok(response);

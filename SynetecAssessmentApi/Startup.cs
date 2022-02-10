@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SynetecAssessmentApi.Persistence;
+using SynetecAssessmentApi.Persistence.Middleware;
 using SynetecAssessmentApi.Services;
 using SynetecAssessmentApi.Services.Interfaces;
 
@@ -44,6 +45,8 @@ namespace SynetecAssessmentApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SynetecAssessmentApi v1"));
             }
+
+            app.UseMiddleware<CustomErrorHandler>();
 
             app.UseHttpsRedirection();
 
