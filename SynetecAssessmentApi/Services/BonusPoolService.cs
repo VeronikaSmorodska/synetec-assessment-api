@@ -15,6 +15,7 @@ namespace SynetecAssessmentApi.Services
 
         public BonusPoolService(IEmployeeRepository employeeRepository)
         {
+            // All repository access logic moved to Employee repository class.
             _employeeRepository = employeeRepository;
         }
 

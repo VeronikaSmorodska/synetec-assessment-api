@@ -12,8 +12,11 @@ namespace SynetecAssessmentApi.Controllers
         public readonly IBonusPoolService _bonusPoolService;
         public BonusPoolController(IBonusPoolService bonusPoolService)
         {
+            // Using DI instead of creating an instance of BonusPoolService each time we need to use it.
             _bonusPoolService = bonusPoolService;
         }
+
+        // Providing controller actions with distinct names
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -21,9 +24,11 @@ namespace SynetecAssessmentApi.Controllers
             return Ok(response);
         }
 
+        // Providing controller actions with distinct names
         [HttpPost("CalculateBonus")]
         public async Task<IActionResult> CalculateBonus([FromBody] CalculateBonusDto request)
         {
+            // Validating ModelState before sending values further so we might catch some important errors earlier. 
             if (!ModelState.IsValid)
             {
                 string errorsString = string.Join("; ", ModelState.Values
