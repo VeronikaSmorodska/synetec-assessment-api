@@ -1,4 +1,5 @@
-﻿using SynetecAssessmentApi.Domain;
+﻿using AutoMapper;
+using SynetecAssessmentApi.Domain;
 using SynetecAssessmentApi.Domain.Constants;
 using SynetecAssessmentApi.Domain.Errors;
 using SynetecAssessmentApi.Dtos;
@@ -12,35 +13,19 @@ namespace SynetecAssessmentApi.Services
     public class BonusPoolService : IBonusPoolService
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IMapper _mapper;
 
-        public BonusPoolService(IEmployeeRepository employeeRepository)
+        public BonusPoolService(IEmployeeRepository employeeRepository, IMapper mapper)
         {
             // All repository access logic moved to Employee repository class.
             _employeeRepository = employeeRepository;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<EmployeeDto>> GetEmployeesAsync()
         {
             IEnumerable<Employee> employees = await _employeeRepository.GetAllWithDepartment();
-
-            List<EmployeeDto> result = new List<EmployeeDto>();
-
-            foreach (var employee in employees)
-            {
-                result.Add(
-                    new EmployeeDto
-                    {
-                        Fullname = employee.Fullname,
-                        JobTitle = employee.JobTitle,
-                        Salary = employee.Salary,
-                        Department = new DepartmentDto
-                        {
-                            Title = employee.Department.Title,
-                            Description = employee.Department.Description
-                        }
-                    });
-            }
-
+            List<EmployeeDto> result = _mapper.Map<List<EmployeeDto>>(employees);
             return result;
         }
 
@@ -63,18 +48,7 @@ namespace SynetecAssessmentApi.Services
 
             return new BonusPoolCalculatorResultDto
             {
-                Employee = new EmployeeDto
-                {
-                    Fullname = employee.Fullname,
-                    JobTitle = employee.JobTitle,
-                    Salary = employee.Salary,
-                    Department = new DepartmentDto
-                    {
-                        Title = employee.Department.Title,
-                        Description = employee.Department.Description
-                    }
-                },
-
+                Employee = _mapper.Map<EmployeeDto>(employee),
                 Amount = bonusAllocation
             };
         }

@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using SynetecAssessmentApi.Domain.Mapper;
 using SynetecAssessmentApi.Persistence;
 using SynetecAssessmentApi.Persistence.Middleware;
 using SynetecAssessmentApi.Persistence.Repositories;
@@ -37,6 +39,8 @@ namespace SynetecAssessmentApi
 
             services.AddScoped<IBonusPoolService, BonusPoolService>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            ConfigureAutomapper(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +65,16 @@ namespace SynetecAssessmentApi
             {
                 endpoints.MapControllers();
             });
+        }
+        private static void ConfigureAutomapper(IServiceCollection services)
+        {
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AllowNullCollections = true;
+                mc.AddProfile(new MapperProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
     }
 }
